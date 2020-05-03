@@ -9,25 +9,46 @@
 // canConstruct("aa", "ab") -> false
 // canConstruct("aa", "aab") -> true
 
+//Solution with O(n) space complexity
+
+// class Solution {
+// public:
+//     bool canConstruct(string a, string b) {
+//         unordered_map<char,int> m;
+//         for(char c: b) {
+//             if(m[c]==0) {
+//                 m[c]=1;
+//             }
+//             else {
+//                 m[c]++;
+//             }
+//         }
+//         for(char c:a) {
+//             if(m[c]<=0) {
+//                 return false;
+//             }
+//             else {
+//                 m[c]--;
+//             }
+//         }
+//         return true;
+//     }
+// };
+
+// Solution with O(1) space complexity
+
 class Solution {
 public:
     bool canConstruct(string a, string b) {
-        unordered_map<char,int> m;
+        vector<int> v(26);
         for(char c: b) {
-            if(m[c]==0) {
-                m[c]=1;
-            }
-            else {
-                m[c]++;
-            }
+            v[c-'a']++;
         }
         for(char c:a) {
-            if(m[c]<=0) {
+            if(v[c-'a']<=0) {
                 return false;
             }
-            else {
-                m[c]--;
-            }
+            v[c-'a']--;
         }
         return true;
     }
