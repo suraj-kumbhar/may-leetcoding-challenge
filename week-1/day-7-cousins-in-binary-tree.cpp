@@ -45,44 +45,84 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
+// class Solution {
+// public:
+//     bool isCousins(TreeNode* root, int x, int y) {
+//         if(!root||root->val==x||root->val==y) return false;
+//         int dX=-1;
+//         int dY=-1;
+//         int pX=0;
+//         int pY=0;
+//         parentAndDepth(root,0,dX,dY,pX,pY,x,y);
+//         return ((dX==dY)&&(pX!=pY));
+//     }
+//     void parentAndDepth(TreeNode* root,int h,int &dX,int &dY,int &pX,int &pY, int x, int y) {
+//         if(!root) return;
+        
+//         if(root->right) {
+//             if(root->right->val==x) {
+//                 dX=h+1;
+//                 pX=root->val;
+//             }
+//             else if(root->right->val == y) {
+//                 dY=h+1;
+//                 pY=root->val;
+//             }
+//         }
+//         if(root->left) {
+//             if(root->left->val==x) {
+//                 dX=h+1;
+//                 pX=root->val;
+//             }
+//             else if(root->left->val == y) {
+//                 dY=h+1;
+//                 pY=root->val;
+//             }
+//         }
+//         if((dY!=-1)&&(dX!=-1)) return;
+        
+//         parentAndDepth(root->left,h+1,dX,dY,pX,pY,x,y);
+//         parentAndDepth(root->right,h+1,dX,dY,pX,pY,x,y);
+        
+//     }
+// };
+
+//Efficient solution using level order traversal
+
 class Solution {
 public:
+    
     bool isCousins(TreeNode* root, int x, int y) {
         if(!root||root->val==x||root->val==y) return false;
-        int dX=-1;
-        int dY=-1;
-        int pX=0;
-        int pY=0;
-        parentAndDepth(root,0,dX,dY,pX,pY,x,y);
-        return ((dX==dY)&&(pX!=pY));
-    }
-    void parentAndDepth(TreeNode* root,int h,int &dX,int &dY,int &pX,int &pY, int x, int y) {
-        if(!root) return;
-        
-        if(root->right) {
-            if(root->right->val==x) {
-                dX=h+1;
-                pX=root->val;
-            }
-            else if(root->right->val == y) {
-                dY=h+1;
-                pY=root->val;
-            }
-        }
-        if(root->left) {
-            if(root->left->val==x) {
-                dX=h+1;
-                pX=root->val;
-            }
-            else if(root->left->val == y) {
-                dY=h+1;
-                pY=root->val;
+        queue<pair<TreeNode*, TreeNode*>> q;
+        TreeNode* temp = new TreeNode(-1);
+        q.push(make_pair(root,temp));
+        pair<TreeNode*,TreeNode*> p;
+        TreeNode* xP=NULL;
+        TreeNode* yP=NULL;
+        int s;
+        while(!q.empty())
+        {
+            s=q.size();
+            xP=NULL;
+            yP=NULL;
+            while(s) {
+                p=q.front();
+                q.pop();
+
+                if(p.first->val==x) {
+                    xP=p.second;
+                }
+                if(p.first->val==y) {
+                    yP=p.second;
+                }
+                if(p.first->left) q.push(make_pair(p.first->left,p.first));
+                if(p.first->right) q.push(make_pair(p.first->right,p.first));
+                s--;
+                if(xP&&yP) return(xP->val!=yP->val); 
             }
         }
-        if((dY!=-1)&&(dX!=-1)) return;
         
-        parentAndDepth(root->left,h+1,dX,dY,pX,pY,x,y);
-        parentAndDepth(root->right,h+1,dX,dY,pX,pY,x,y);
-        
+        return false;
     }
 };
