@@ -15,29 +15,29 @@
 
 class Solution {
 public:
-    // double squareRoot(int n) 
-    // { 
-    //     return pow(2, 0.5*log2(n)); 
-    // } 
-    
+    // double squareRoot(int n)
+    // {
+    //     return pow(2, 0.5*log2(n));
+    // }
+
     bool isPerfectSquare(int num) {
-        if(num<0) return false;
-        if(num==0||num==1) return true;
-        long l=1;
-        long r=num/2;
-        long mid=0;
-        long long midSqr=0;
-        while(l<=r) {
-            mid = l +(r-l)/2;
-            midSqr = mid*mid;
-            if(midSqr==num) {
+        if (num < 0) return false;
+        if (num == 0 || num == 1) return true;
+        long l = 1;
+        long r = num / 2;
+        long mid = 0;
+        long long midSqr = 0;
+        while (l <= r) {
+            mid = l + (r - l) / 2;
+            midSqr = mid * mid;
+            if (midSqr == num) {
                 return true;
             }
-            else if(midSqr < num) {
-                l=mid+1;
+            else if (midSqr < num) {
+                l = mid + 1;
             }
             else {
-                r=mid-1;
+                r = mid - 1;
             }
         }
         return false;

@@ -11,7 +11,7 @@
 
 // If the town judge exists and can be identified, return the label of the town judge.  Otherwise, return -1.
 
- 
+
 
 // Example 1:
 
@@ -33,7 +33,7 @@
 
 // Input: N = 4, trust = [[1,3],[1,4],[2,3],[2,4],[4,3]]
 // Output: 3
- 
+
 
 // Note:
 
@@ -46,21 +46,21 @@
 class Solution {
 public:
     int findJudge(int n, vector<vector<int>>& t) {
-        vector<int> v(n+1,0);
-        for(auto i:t) {
+        vector<int> v(n + 1, 0);
+        for (auto i : t) {
             v[i[1]]++;
         }
-        int j=-1;
-        for(int i=1;i<=n;i++)
+        int j = -1;
+        for (int i = 1; i <= n; i++)
         {
-            if(v[i]==n-1) {
-                j=i;
+            if (v[i] == n - 1) {
+                j = i;
                 break;
             }
         }
         // cout<<j;
-        for(auto i:t) {
-            if(i[0]==j) return -1;
+        for (auto i : t) {
+            if (i[0] == j) return -1;
         }
         return j;
     }
